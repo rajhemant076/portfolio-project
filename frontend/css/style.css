@@ -41,6 +41,13 @@
     --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.5);
     --shadow-glow: 0 0 30px rgba(99, 102, 241, 0.3);
     
+    /* Border Radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-full: 9999px;
+    
     /* Animations */
     --transition-fast: 0.2s ease;
     --transition-normal: 0.3s ease;
@@ -50,7 +57,7 @@
 
 html {
     scroll-behavior: smooth;
-    scroll-padding-top: 100px; /* Increased to account for navbar height + gap */
+    scroll-padding-top: 120px; /* Increased for more gap */
 }
 
 body {
@@ -102,10 +109,10 @@ body::before {
     z-index: 1;
 }
 
-/* ===== NAVIGATION ===== */
+/* ===== NAVIGATION - REDUCED SIZE ===== */
 .navbar {
     position: fixed;
-    top: 20px;
+    top: 15px;
     left: 50%;
     transform: translateX(-50%);
     width: calc(100% - 40px);
@@ -113,8 +120,8 @@ body::before {
     background: rgba(11, 16, 30, 0.8);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border-radius: 60px;
-    padding: 0.8rem 2rem;
+    border-radius: var(--radius-full);
+    padding: 0.6rem 1.8rem; /* Reduced padding */
     z-index: 1000;
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: var(--shadow-lg);
@@ -137,14 +144,14 @@ body::before {
 }
 
 .nav-brand {
-    font-size: 2rem;
+    font-size: 1.8rem; /* Slightly reduced */
     font-weight: 800;
     background: var(--gradient-primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     letter-spacing: -0.5px;
     position: relative;
-    padding: 0.5rem 0;
+    padding: 0.4rem 0;
 }
 
 .nav-brand::after {
@@ -165,15 +172,15 @@ body::before {
 .nav-menu {
     display: flex;
     list-style: none;
-    gap: 2rem;
+    gap: 1.8rem; /* Slightly reduced */
 }
 
 .nav-menu a {
     color: var(--text-secondary);
     text-decoration: none;
     font-weight: 500;
-    font-size: 1rem;
-    padding: 0.5rem 0;
+    font-size: 0.95rem; /* Slightly reduced */
+    padding: 0.4rem 0;
     transition: var(--transition-normal);
     position: relative;
     background: transparent;
@@ -212,15 +219,16 @@ body::before {
 
 .menu-toggle {
     display: none;
-    font-size: 2rem;
+    font-size: 1.8rem;
     cursor: pointer;
     color: var(--text-primary);
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     align-items: center;
     justify-content: center;
     background: var(--bg-card);
     border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-full);
     transition: var(--transition-normal);
 }
 
@@ -229,12 +237,12 @@ body::before {
     transform: rotate(90deg);
 }
 
-/* ===== HERO SECTION ===== */
+/* ===== HERO SECTION - INCREASED GAP ===== */
 .hero {
     min-height: 100vh;
     display: flex;
     align-items: center;
-    padding: 140px 0 80px; /* Increased top padding to create gap from navbar */
+    padding: 160px 0 80px; /* Increased top padding for more gap from navbar */
     position: relative;
     overflow: hidden;
 }
@@ -337,6 +345,7 @@ body::before {
     background: var(--bg-card);
     padding: 1.5rem 2rem;
     border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-lg);
     transition: var(--transition-normal);
 }
 
@@ -366,6 +375,7 @@ body::before {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
+    border-radius: var(--radius-full);
 }
 
 .btn::before {
@@ -482,6 +492,7 @@ body::before {
     height: 4px;
     background: var(--gradient-primary);
     box-shadow: var(--shadow-glow);
+    border-radius: var(--radius-full);
 }
 
 .section-title::after {
@@ -494,6 +505,7 @@ body::before {
     height: 4px;
     background: var(--gradient-accent);
     box-shadow: var(--shadow-glow);
+    border-radius: var(--radius-full);
 }
 
 /* ===== ABOUT SECTION ===== */
@@ -508,6 +520,7 @@ body::before {
     backdrop-filter: blur(10px);
     padding: 3rem;
     border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-xl);
     position: relative;
     overflow: hidden;
     transition: var(--transition-normal);
@@ -546,6 +559,7 @@ body::before {
     backdrop-filter: blur(10px);
     padding: 2.5rem;
     border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-xl);
     transition: var(--transition-normal);
     position: relative;
     overflow: hidden;
@@ -602,6 +616,7 @@ body::before {
     border: 1px solid rgba(99, 102, 241, 0.2);
     backdrop-filter: blur(5px);
     cursor: default;
+    border-radius: var(--radius-full);
 }
 
 .skill-tag:hover {
@@ -624,6 +639,7 @@ body::before {
     backdrop-filter: blur(10px);
     overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-xl);
     transition: var(--transition-normal);
     position: relative;
 }
@@ -697,6 +713,7 @@ body::before {
     font-size: 0.9rem;
     font-weight: 500;
     border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: var(--radius-full);
     transition: var(--transition-normal);
 }
 
@@ -725,6 +742,7 @@ body::before {
     position: relative;
     overflow: hidden;
     z-index: 1;
+    border-radius: var(--radius-full);
 }
 
 .project-links a:first-child {
@@ -768,6 +786,7 @@ body::before {
     padding: 2rem 2rem 2rem 4rem;
     margin-bottom: 2rem;
     border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-lg);
     transition: var(--transition-normal);
     position: relative;
     margin-left: 40px;
@@ -783,6 +802,7 @@ body::before {
     height: 20px;
     background: var(--gradient-primary);
     box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+    border-radius: var(--radius-full);
     transition: var(--transition-normal);
 }
 
@@ -820,6 +840,7 @@ body::before {
     padding: 0.3rem 1rem;
     background: rgba(99, 102, 241, 0.1);
     border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: var(--radius-full);
 }
 
 .experience-item ul {
@@ -848,6 +869,7 @@ body::before {
     backdrop-filter: blur(10px);
     padding: 2.5rem;
     border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-xl);
     transition: var(--transition-normal);
     position: relative;
     overflow: hidden;
@@ -898,6 +920,7 @@ body::before {
     padding: 0.3rem 1rem;
     background: rgba(99, 102, 241, 0.1);
     border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: var(--radius-full);
 }
 
 .education-card p {
@@ -905,7 +928,7 @@ body::before {
     line-height: 1.7;
 }
 
-/* ===== CONTACT SECTION - CLEANER STYLING ===== */
+/* ===== CONTACT SECTION ===== */
 .contact-section {
     position: relative;
     overflow: hidden;
@@ -925,6 +948,7 @@ body::before {
     backdrop-filter: blur(10px);
     padding: 2.5rem;
     border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-xl);
     height: fit-content;
 }
 
@@ -951,14 +975,17 @@ body::before {
     align-items: center;
     gap: 1rem;
     margin-bottom: 1rem;
-    padding: 0.8rem 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.8rem 1rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-lg);
     transition: var(--transition-normal);
 }
 
 .contact-detail-item:hover {
-    border-bottom-color: var(--primary);
+    border-color: var(--primary);
     transform: translateX(5px);
+    background: rgba(99, 102, 241, 0.1);
 }
 
 .contact-detail-item i {
@@ -977,12 +1004,13 @@ body::before {
     backdrop-filter: blur(10px);
     padding: 2.5rem;
     border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-xl);
 }
 
 .contact-form {
     display: flex;
     flex-direction: column;
-    gap: 1.8rem;
+    gap: 1.5rem;
 }
 
 .form-group {
@@ -992,10 +1020,10 @@ body::before {
 .form-group input,
 .form-group textarea {
     width: 100%;
-    padding: 1rem 0;
-    background: transparent;
-    border: none;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem 1.2rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-lg);
     font-size: 1rem;
     font-family: inherit;
     color: var(--text-primary);
@@ -1003,60 +1031,40 @@ body::before {
 }
 
 .form-group textarea {
-    min-height: 100px;
+    min-height: 120px;
     resize: vertical;
-}
-
-.form-group label {
-    position: absolute;
-    left: 0;
-    top: 1rem;
-    color: var(--text-muted);
-    transition: var(--transition-normal);
-    pointer-events: none;
-    font-size: 1rem;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
     outline: none;
-    border-bottom-color: var(--primary);
-}
-
-.form-group input:focus ~ label,
-.form-group textarea:focus ~ label,
-.form-group input:not(:placeholder-shown) ~ label,
-.form-group textarea:not(:placeholder-shown) ~ label {
-    top: -1.2rem;
-    font-size: 0.85rem;
-    color: var(--primary);
+    border-color: var(--primary);
+    background: rgba(99, 102, 241, 0.1);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
 }
 
 .form-group input::placeholder,
 .form-group textarea::placeholder {
-    color: transparent;
+    color: var(--text-muted);
 }
 
 .contact-form button {
     width: 100%;
     padding: 1rem;
-    background: transparent;
-    border: 2px solid var(--primary);
+    background: var(--gradient-primary);
+    border: none;
+    border-radius: var(--radius-lg);
     color: white;
     font-weight: 600;
     font-size: 1rem;
     cursor: pointer;
     transition: var(--transition-normal);
-    margin-top: 1rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    margin-top: 0.5rem;
 }
 
 .contact-form button:hover {
-    background: var(--primary);
-    color: white;
     transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(99, 102, 241, 0.2);
+    box-shadow: var(--shadow-glow);
 }
 
 .contact-message {
@@ -1064,6 +1072,7 @@ body::before {
     padding: 1rem;
     text-align: center;
     font-weight: 500;
+    border-radius: var(--radius-lg);
     animation: slideIn 0.3s ease;
     border: 1px solid;
 }
@@ -1204,6 +1213,7 @@ body::before {
     padding: 0.8rem 1.2rem;
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-lg);
     color: var(--text-primary);
     font-size: 0.95rem;
     transition: var(--transition-normal);
@@ -1224,6 +1234,7 @@ body::before {
     padding: 0.8rem 1.5rem;
     background: var(--gradient-primary);
     border: none;
+    border-radius: var(--radius-lg);
     color: white;
     font-weight: 600;
     font-size: 0.95rem;
@@ -1242,6 +1253,7 @@ body::before {
     margin-top: 0.8rem;
     font-size: 0.9rem;
     padding: 0.5rem;
+    border-radius: var(--radius-md);
     display: none;
 }
 
@@ -1277,6 +1289,7 @@ body::before {
     width: 40px;
     height: 2px;
     background: var(--gradient-primary);
+    border-radius: var(--radius-full);
     transition: var(--transition-normal);
 }
 
@@ -1335,14 +1348,15 @@ body::before {
     color: var(--text-light);
     font-size: 0.95rem;
     transition: var(--transition-normal);
-    padding: 0.5rem;
+    padding: 0.5rem 1rem;
     background: rgba(255, 255, 255, 0.02);
-    border: 1px solid transparent;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-lg);
 }
 
 .contact-info li:hover {
-    background: rgba(99, 102, 241, 0.05);
-    border-color: rgba(99, 102, 241, 0.2);
+    background: rgba(99, 102, 241, 0.1);
+    border-color: var(--primary);
     transform: translateX(5px);
 }
 
@@ -1385,6 +1399,7 @@ body::before {
     font-size: 0.9rem;
     font-weight: 500;
     border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: var(--radius-full);
     transition: var(--transition-normal);
     cursor: default;
     backdrop-filter: blur(5px);
@@ -1436,6 +1451,7 @@ body::before {
     height: 40px;
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-full);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1483,6 +1499,7 @@ body::before {
     width: 50px;
     height: 50px;
     background: var(--gradient-primary);
+    border-radius: var(--radius-full);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1546,7 +1563,7 @@ body::before {
 @media (max-width: 768px) {
     .navbar {
         top: 10px;
-        padding: 0.5rem 1.5rem;
+        padding: 0.4rem 1.2rem;
     }
     
     .menu-toggle {
@@ -1555,7 +1572,7 @@ body::before {
     
     .nav-menu {
         position: fixed;
-        top: 80px;
+        top: 70px;
         left: 20px;
         right: 20px;
         background: var(--bg-darker);
@@ -1565,6 +1582,7 @@ body::before {
         gap: 1rem;
         padding: 1.5rem;
         border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: var(--radius-lg);
         transform: scaleY(0);
         opacity: 0;
         transform-origin: top;
@@ -1585,7 +1603,7 @@ body::before {
     }
     
     .hero {
-        padding: 120px 0 60px;
+        padding: 140px 0 60px;
     }
     
     .hero h1 {
@@ -1718,7 +1736,7 @@ body::before {
     }
     
     .contact-detail-item {
-        padding: 0.6rem 0;
+        padding: 0.6rem 1rem;
     }
     
     .contact-detail-item i {
