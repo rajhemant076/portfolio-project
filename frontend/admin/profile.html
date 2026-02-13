@@ -87,12 +87,48 @@
     <script src="../js/admin-auth.js"></script>
     <script>
         const API_URL = 'https://portfolio-backend-uyru.onrender.com/api';
-        const token = localStorage.getItem('adminToken');
+        
+        // Get token from storage
+        const token = localStorage.getItem('adminToken') || sessionStorage.getItem('adminToken');
+        
+        // Debug token
+        console.log('=== PROFILE PAGE DEBUG ===');
+        console.log('Token exists:', !!token);
+        if (token) {
+            console.log('Token length:', token.length);
+            console.log('Token preview:', token.substring(0, 30) + '...');
+            console.log('Is valid JWT format?', token.split('.').length === 3);
+        } else {
+            console.error('❌ NO TOKEN FOUND!');
+            alert('Session expired. Please login again.');
+            window.location.href = 'login.html';
+        }
 
         async function loadProfile() {
             try {
-                const response = await fetch(`${API_URL}/profile`);
+                console.log('Fetching profile with token...');
+                
+                // FIXED: Added Authorization header to the GET request
+                const response = await fetch(`${API_URL}/profile`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                console.log('Profile response status:', response.status);
+                
+                if (response.status === 401) {
+                    console.error('❌ Token rejected by server');
+                    alert('Session expired. Please login again.');
+                    localStorage.removeItem('adminToken');
+                    sessionStorage.removeItem('adminToken');
+                    window.location.href = 'login.html';
+                    return;
+                }
+                
                 const result = await response.json();
+                console.log('Profile load success:', result.success);
                 
                 if (result.success) {
                     const profile = result.data;
@@ -108,6 +144,10 @@
                         document.getElementById('twitter').value = profile.socials.twitter || '';
                         document.getElementById('instagram').value = profile.socials.instagram || '';
                     }
+                    
+                    console.log('✅ Profile loaded successfully');
+                } else {
+                    console.error('Failed to load profile:', result.message);
                 }
             } catch (error) {
                 console.error('Error loading profile:', error);
@@ -131,6 +171,8 @@
                 }
             };
             
+            console.log('Updating profile...');
+            
             try {
                 const response = await fetch(`${API_URL}/profile`, {
                     method: 'PUT',
@@ -141,15 +183,28 @@
                     body: JSON.stringify(profileData)
                 });
                 
+                console.log('Update response status:', response.status);
+                
+                if (response.status === 401) {
+                    console.error('❌ Token rejected during update');
+                    alert('Session expired. Please login again.');
+                    localStorage.removeItem('adminToken');
+                    sessionStorage.removeItem('adminToken');
+                    window.location.href = 'login.html';
+                    return;
+                }
+                
                 const result = await response.json();
                 const messageDiv = document.getElementById('message');
                 
                 if (result.success) {
                     messageDiv.className = 'message success';
                     messageDiv.textContent = 'Profile updated successfully!';
+                    console.log('✅ Profile updated successfully');
                 } else {
                     messageDiv.className = 'message error';
                     messageDiv.textContent = result.message || 'Failed to update profile';
+                    console.error('Update failed:', result.message);
                 }
                 
                 setTimeout(() => {
@@ -164,6 +219,7 @@
             }
         });
 
+        // Load profile when page loads
         window.addEventListener('DOMContentLoaded', loadProfile);
     </script>
 </body>
