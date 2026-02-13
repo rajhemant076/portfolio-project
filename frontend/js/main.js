@@ -1,5 +1,5 @@
 // API Base URL - Change this to your backend URL
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'https://portfolio-backend-uyru.onrender.com/api';
 
 // Fetch and display profile data
 async function fetchProfile() {
