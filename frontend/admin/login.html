@@ -17,11 +17,11 @@
             <div class="nav-links">
                 <a href="../index.html" class="nav-link home-link">
                     <span>🏠</span>
-                    Visit Homepage
+                    <span class="nav-text">Visit Homepage</span>
                 </a>
                 <a href="#" class="nav-link" onclick="history.back()">
                     <span>↩</span>
-                    Go Back
+                    <span class="nav-text">Go Back</span>
                 </a>
             </div>
         </div>
@@ -32,7 +32,7 @@
         <div class="login-box">
             <!-- Animated Icon -->
             <div class="login-icon">
-                🔐
+                <span class="icon">🔐</span>
             </div>
             
             <!-- Header -->
@@ -46,7 +46,7 @@
                 <div class="form-group">
                     <label for="email">Email Address</label>
                     <div class="input-wrapper">
-                        <span class="input-icon"></span>
+                        <span class="input-icon">📧</span>
                         <input type="email" id="email" placeholder="Enter your email" required>
                     </div>
                 </div>
@@ -54,7 +54,7 @@
                 <div class="form-group">
                     <label for="password">Password</label>
                     <div class="input-wrapper">
-                        <span class="input-icon"></span>
+                        <span class="input-icon">🔒</span>
                         <input type="password" id="password" placeholder="Enter your password" required>
                         <span class="password-toggle" onclick="togglePassword()">👁️</span>
                     </div>
@@ -78,12 +78,10 @@
             
             <!-- Admin Info Card -->
             <div class="admin-info">
-                <h3>📋 Demo Credentials</h3>
-                <p><span></span> Email: <code>admin@portfolio.com</code></p>
-                <p><span></span> Password: <code>admin123</code></p>
-                <p style="margin-top: 0.8rem; color: var(--admin-text-muted); font-size: 0.85rem;">
-                    ⚠️ For demo purposes only. Change in production.
-                </p>
+                <h3>Demo Credentials</h3>
+                <p><span class="info-icon">📧</span> Email: <code>admin@portfolio.com</code></p>
+                <p><span class="info-icon">🔑</span> Password: <code>admin123</code></p>
+                <p class="demo-warning">⚠️ For demo purposes only. Change in production.</p>
             </div>
         </div>
     </div>
@@ -122,6 +120,7 @@
                 btnText.style.opacity = '0.7';
                 btnSpinner.style.display = 'inline-block';
                 loginBtn.disabled = true;
+                messageDiv.style.display = 'none';
                 
                 const response = await fetch(`${API_URL}/auth/login`, {
                     method: 'POST',
@@ -133,7 +132,7 @@
                 
                 const result = await response.json();
                 
-                if (result.success) {
+                if (result.success && result.token) {
                     // Store token with optional remember me
                     if (remember) {
                         localStorage.setItem('adminToken', result.token);
@@ -142,7 +141,8 @@
                     }
                     
                     messageDiv.className = 'message success';
-                    messageDiv.textContent = '✅ Login successful! Redirecting to dashboard...';
+                    messageDiv.textContent = 'Login successful! Redirecting...';
+                    messageDiv.style.display = 'block';
                     
                     // Redirect to dashboard
                     setTimeout(() => {
@@ -150,7 +150,8 @@
                     }, 1500);
                 } else {
                     messageDiv.className = 'message error';
-                    messageDiv.textContent = result.message || '❌ Login failed. Please check your credentials.';
+                    messageDiv.textContent = result.message || 'Login failed. Please check your credentials.';
+                    messageDiv.style.display = 'block';
                     
                     // Reset button
                     btnText.style.opacity = '1';
@@ -160,7 +161,8 @@
             } catch (error) {
                 console.error('Login error:', error);
                 messageDiv.className = 'message error';
-                messageDiv.textContent = '❌ An error occurred. Please try again.';
+                messageDiv.textContent = 'Connection error. Please try again.';
+                messageDiv.style.display = 'block';
                 
                 // Reset button
                 btnText.style.opacity = '1';
@@ -178,7 +180,7 @@
             }
         });
 
-        // Add keyboard shortcut to focus on email input
+        // Add keyboard shortcut to focus on email input (Ctrl+L)
         document.addEventListener('keydown', (e) => {
             if (e.ctrlKey && e.key === 'l') {
                 e.preventDefault();
@@ -192,6 +194,18 @@
         window.addEventListener('load', () => {
             document.body.style.opacity = '1';
         });
+
+        // Add responsive class for mobile
+        function checkMobile() {
+            if (window.innerWidth <= 768) {
+                document.body.classList.add('mobile-view');
+            } else {
+                document.body.classList.remove('mobile-view');
+            }
+        }
+        
+        window.addEventListener('load', checkMobile);
+        window.addEventListener('resize', checkMobile);
     </script>
 </body>
 </html>

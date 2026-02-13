@@ -22,6 +22,10 @@
             </nav>
         </aside>
         
+        <!-- Mobile Menu Button -->
+        <button class="mobile-menu-btn" id="mobile-menu-btn">☰</button>
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+        
         <main class="main-content">
             <header class="admin-header">
                 <h1>Contact Messages</h1>
@@ -36,7 +40,34 @@
     <script src="../js/admin-auth.js"></script>
     <script>
         const API_URL = 'https://portfolio-backend-uyru.onrender.com/api';
-        const token = localStorage.getItem('adminToken');
+        const token = localStorage.getItem('adminToken') || sessionStorage.getItem('adminToken');
+        
+        // Check token
+        if (!token) {
+            alert('Please login first');
+            window.location.href = 'login.html';
+        }
+
+        // Mobile menu toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            
+            if (menuBtn && sidebar && overlay) {
+                menuBtn.addEventListener('click', function() {
+                    sidebar.classList.toggle('active');
+                    overlay.classList.toggle('active');
+                    menuBtn.innerHTML = sidebar.classList.contains('active') ? '✕' : '☰';
+                });
+                
+                overlay.addEventListener('click', function() {
+                    sidebar.classList.remove('active');
+                    overlay.classList.remove('active');
+                    menuBtn.innerHTML = '☰';
+                });
+            }
+        });
 
         async function loadMessages() {
             try {
@@ -45,6 +76,12 @@
                         'Authorization': `Bearer ${token}`
                     }
                 });
+                
+                if (response.status === 401) {
+                    alert('Session expired. Please login again.');
+                    window.location.href = 'login.html';
+                    return;
+                }
                 
                 const result = await response.json();
                 const messagesList = document.getElementById('messages-list');
@@ -55,9 +92,9 @@
                         return `
                             <div class="data-card message-card">
                                 <div class="data-card-header">
-                                    <div>
+                                    <div class="message-info">
                                         <h3>${msg.name}</h3>
-                                        <p><strong>Email:</strong> ${msg.email}</p>
+                                        <p class="message-email"><strong>Email:</strong> ${msg.email}</p>
                                         <p class="message-date">${date}</p>
                                     </div>
                                     <div class="data-card-actions">
@@ -71,7 +108,7 @@
                         `;
                     }).join('');
                 } else {
-                    messagesList.innerHTML = '<p>No messages yet.</p>';
+                    messagesList.innerHTML = '<p class="no-data">No messages yet.</p>';
                 }
             } catch (error) {
                 console.error('Error loading messages:', error);
@@ -88,6 +125,12 @@
                         'Authorization': `Bearer ${token}`
                     }
                 });
+                
+                if (response.status === 401) {
+                    alert('Session expired. Please login again.');
+                    window.location.href = 'login.html';
+                    return;
+                }
                 
                 const result = await response.json();
                 

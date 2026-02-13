@@ -22,10 +22,16 @@
             </nav>
         </aside>
         
+        <!-- Mobile Menu Button -->
+        <button class="mobile-menu-btn" id="mobile-menu-btn">☰</button>
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+        
         <main class="main-content">
             <header class="admin-header">
                 <h1>Manage Experience</h1>
-                <button class="btn btn-primary" onclick="showAddForm()">Add New Experience</button>
+                <div class="header-actions">
+                    <button class="btn btn-primary" onclick="showAddForm()">+ Add New</button>
+                </div>
             </header>
             
             <div id="add-form" class="form-card" style="display: none;">
@@ -35,12 +41,12 @@
                     
                     <div class="form-group">
                         <label for="role">Job Role</label>
-                        <input type="text" id="role" required>
+                        <input type="text" id="role" placeholder="e.g., Senior Developer" required>
                     </div>
                     
                     <div class="form-group">
                         <label for="company">Company Name</label>
-                        <input type="text" id="company" required>
+                        <input type="text" id="company" placeholder="e.g., Google" required>
                     </div>
                     
                     <div class="form-group">
@@ -72,14 +78,43 @@
     <script src="../js/admin-auth.js"></script>
     <script>
         const API_URL = 'https://portfolio-backend-uyru.onrender.com/api';
-        const token = localStorage.getItem('adminToken');
+        const token = localStorage.getItem('adminToken') || sessionStorage.getItem('adminToken');
+        
+        // Check token
+        if (!token) {
+            alert('Please login first');
+            window.location.href = 'login.html';
+        }
+        
         let editMode = false;
+
+        // Mobile menu toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            
+            if (menuBtn && sidebar && overlay) {
+                menuBtn.addEventListener('click', function() {
+                    sidebar.classList.toggle('active');
+                    overlay.classList.toggle('active');
+                    menuBtn.innerHTML = sidebar.classList.contains('active') ? '✕' : '☰';
+                });
+                
+                overlay.addEventListener('click', function() {
+                    sidebar.classList.remove('active');
+                    overlay.classList.remove('active');
+                    menuBtn.innerHTML = '☰';
+                });
+            }
+        });
 
         function showAddForm() {
             document.getElementById('add-form').style.display = 'block';
             document.getElementById('experience-form').reset();
             document.getElementById('experience-id').value = '';
             editMode = false;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function hideForm() {
@@ -89,9 +124,19 @@
 
         async function loadExperience() {
             try {
-                const response = await fetch(`${API_URL}/experience`);
-                const result = await response.json();
+                const response = await fetch(`${API_URL}/experience`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
                 
+                if (response.status === 401) {
+                    alert('Session expired. Please login again.');
+                    window.location.href = 'login.html';
+                    return;
+                }
+                
+                const result = await response.json();
                 const experienceList = document.getElementById('experience-list');
                 
                 if (result.success && result.data.length > 0) {
@@ -103,17 +148,17 @@
                                     <p><strong>${exp.company}</strong> | ${exp.duration}</p>
                                 </div>
                                 <div class="data-card-actions">
-                                    <button class="btn btn-small" onclick='editExperience(${JSON.stringify(exp)})'>Edit</button>
-                                    <button class="btn btn-danger btn-small" onclick="deleteExperience('${exp._id}')">Delete</button>
+                                    <button class="btn btn-small btn-primary" onclick='editExperience(${JSON.stringify(exp).replace(/'/g, "\\'")})'>Edit</button>
+                                    <button class="btn btn-small btn-danger" onclick="deleteExperience('${exp._id}')">Delete</button>
                                 </div>
                             </div>
-                            <ul>
-                                ${exp.points.map(point => `<li>${point}</li>`).join('')}
-                            </ul>
+                            <div class="experience-points">
+                                ${exp.points.map(point => `<p class="experience-point">• ${point}</p>`).join('')}
+                            </div>
                         </div>
                     `).join('');
                 } else {
-                    experienceList.innerHTML = '<p>No experience found. Add your first experience!</p>';
+                    experienceList.innerHTML = '<p class="no-data">No experience found. Add your first experience!</p>';
                 }
             } catch (error) {
                 console.error('Error loading experience:', error);
@@ -142,6 +187,12 @@
                         'Authorization': `Bearer ${token}`
                     }
                 });
+                
+                if (response.status === 401) {
+                    alert('Session expired. Please login again.');
+                    window.location.href = 'login.html';
+                    return;
+                }
                 
                 const result = await response.json();
                 
@@ -178,6 +229,12 @@
                     },
                     body: JSON.stringify(experienceData)
                 });
+                
+                if (response.status === 401) {
+                    alert('Session expired. Please login again.');
+                    window.location.href = 'login.html';
+                    return;
+                }
                 
                 const result = await response.json();
                 const messageDiv = document.getElementById('form-message');

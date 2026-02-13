@@ -22,10 +22,16 @@
             </nav>
         </aside>
         
+        <!-- Mobile Menu Button -->
+        <button class="mobile-menu-btn" id="mobile-menu-btn">☰</button>
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+        
         <main class="main-content">
             <header class="admin-header">
                 <h1>Manage Skills</h1>
-                <button class="btn btn-primary" onclick="showAddForm()">Add New Skill Category</button>
+                <div class="header-actions">
+                    <button class="btn btn-primary" onclick="showAddForm()">+ Add New</button>
+                </div>
             </header>
             
             <div id="add-form" class="form-card" style="display: none;">
@@ -62,14 +68,43 @@
     <script src="../js/admin-auth.js"></script>
     <script>
         const API_URL = 'https://portfolio-backend-uyru.onrender.com/api';
-        const token = localStorage.getItem('adminToken');
+        const token = localStorage.getItem('adminToken') || sessionStorage.getItem('adminToken');
+        
+        // Check token
+        if (!token) {
+            alert('Please login first');
+            window.location.href = 'login.html';
+        }
+        
         let editMode = false;
+
+        // Mobile menu toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            
+            if (menuBtn && sidebar && overlay) {
+                menuBtn.addEventListener('click', function() {
+                    sidebar.classList.toggle('active');
+                    overlay.classList.toggle('active');
+                    menuBtn.innerHTML = sidebar.classList.contains('active') ? '✕' : '☰';
+                });
+                
+                overlay.addEventListener('click', function() {
+                    sidebar.classList.remove('active');
+                    overlay.classList.remove('active');
+                    menuBtn.innerHTML = '☰';
+                });
+            }
+        });
 
         function showAddForm() {
             document.getElementById('add-form').style.display = 'block';
             document.getElementById('skill-form').reset();
             document.getElementById('skill-id').value = '';
             editMode = false;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function hideForm() {
@@ -79,9 +114,19 @@
 
         async function loadSkills() {
             try {
-                const response = await fetch(`${API_URL}/skills`);
-                const result = await response.json();
+                const response = await fetch(`${API_URL}/skills`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
                 
+                if (response.status === 401) {
+                    alert('Session expired. Please login again.');
+                    window.location.href = 'login.html';
+                    return;
+                }
+                
+                const result = await response.json();
                 const skillsList = document.getElementById('skills-list');
                 
                 if (result.success && result.data.length > 0) {
@@ -90,15 +135,15 @@
                             <div class="data-card-header">
                                 <h3>${skill.category}</h3>
                                 <div class="data-card-actions">
-                                    <button class="btn btn-small" onclick='editSkill(${JSON.stringify(skill)})'>Edit</button>
-                                    <button class="btn btn-danger btn-small" onclick="deleteSkill('${skill._id}')">Delete</button>
+                                    <button class="btn btn-small btn-primary" onclick='editSkill(${JSON.stringify(skill).replace(/'/g, "\\'")})'>Edit</button>
+                                    <button class="btn btn-small btn-danger" onclick="deleteSkill('${skill._id}')">Delete</button>
                                 </div>
                             </div>
-                            <p><strong>Skills:</strong> ${skill.skills.join(', ')}</p>
+                            <p class="skills-list"><strong>Skills:</strong> ${skill.skills.join(', ')}</p>
                         </div>
                     `).join('');
                 } else {
-                    skillsList.innerHTML = '<p>No skills found. Add your first skill category!</p>';
+                    skillsList.innerHTML = '<p class="no-data">No skills found. Add your first skill category!</p>';
                 }
             } catch (error) {
                 console.error('Error loading skills:', error);
@@ -125,6 +170,12 @@
                         'Authorization': `Bearer ${token}`
                     }
                 });
+                
+                if (response.status === 401) {
+                    alert('Session expired. Please login again.');
+                    window.location.href = 'login.html';
+                    return;
+                }
                 
                 const result = await response.json();
                 
@@ -159,6 +210,12 @@
                     },
                     body: JSON.stringify(skillData)
                 });
+                
+                if (response.status === 401) {
+                    alert('Session expired. Please login again.');
+                    window.location.href = 'login.html';
+                    return;
+                }
                 
                 const result = await response.json();
                 const messageDiv = document.getElementById('form-message');
