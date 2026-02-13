@@ -325,7 +325,78 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Rest of your existing main.js code...
+// Back to Top Button
+const backToTop = document.getElementById('back-to-top');
+
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 500) {
+        backToTop.classList.add('show');
+    } else {
+        backToTop.classList.remove('show');
+    }
+});
+
+backToTop.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
+
+// Newsletter Form Submission
+const newsletterForm = document.getElementById('newsletter-form');
+if (newsletterForm) {
+    newsletterForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const email = newsletterForm.querySelector('input[type="email"]').value;
+        const messageDiv = document.getElementById('newsletter-message');
+        
+        // Simulate API call - replace with actual newsletter signup
+        try {
+            // Show loading state
+            const submitBtn = newsletterForm.querySelector('button');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Subscribing...';
+            submitBtn.disabled = true;
+            
+            // Simulate API delay
+            await new Promise(resolve => setTimeout(resolve, 1500));
+            
+            // Success message
+            messageDiv.className = 'newsletter-message success';
+            messageDiv.textContent = 'Successfully subscribed to newsletter!';
+            newsletterForm.reset();
+            
+            // Reset button
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+            
+            // Clear message after 5 seconds
+            setTimeout(() => {
+                messageDiv.className = 'newsletter-message';
+                messageDiv.textContent = '';
+            }, 5000);
+            
+        } catch (error) {
+            messageDiv.className = 'newsletter-message error';
+            messageDiv.textContent = 'Subscription failed. Please try again.';
+            
+            // Reset button
+            const submitBtn = newsletterForm.querySelector('button');
+            submitBtn.textContent = 'Subscribe';
+            submitBtn.disabled = false;
+        }
+    });
+}
+
+// Dynamic Year in Footer
+const yearElement = document.querySelector('.copyright p');
+if (yearElement) {
+    const currentYear = new Date().getFullYear();
+    yearElement.innerHTML = yearElement.innerHTML.replace('2024', currentYear);
+}
 
 // Load all data on page load
 window.addEventListener('DOMContentLoaded', () => {
