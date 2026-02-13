@@ -13,24 +13,24 @@
     /* Background Colors */
     --admin-bg-dark: #0b1120;
     --admin-bg-darker: #050a18;
-    --admin-bg-card: rgba(255, 255, 255, 0.07);
-    --admin-bg-card-hover: rgba(255, 255, 255, 0.1);
+    --admin-bg-card: #ffffff;
+    --admin-bg-card-hover: #f8fafc;
     --admin-bg-gradient-1: rgba(99, 102, 241, 0.15);
     --admin-bg-gradient-2: rgba(139, 92, 246, 0.15);
     
     /* Text Colors */
-    --admin-text-primary: #ffffff;
-    --admin-text-secondary: #e2e8f0;
-    --admin-text-muted: #94a3b8;
-    --admin-text-light: #cbd5e1;
+    --admin-text-primary: #1e293b;
+    --admin-text-secondary: #334155;
+    --admin-text-muted: #64748b;
+    --admin-text-light: #94a3b8;
     
-    /* Light Theme Colors (for dashboard) */
+    /* Light Theme Colors */
     --admin-light: #f3f4f6;
     --admin-lighter: #ffffff;
-    --admin-text: #374151;
-    --admin-text-light: #6b7280;
+    --admin-text: #1e293b;
+    --admin-text-light: #64748b;
     --admin-text-white: #ffffff;
-    --admin-border: #e5e7eb;
+    --admin-border: #e2e8f0;
     
     /* Gradients */
     --admin-gradient-primary: linear-gradient(135deg, #6366f1, #8b5cf6);
@@ -40,11 +40,11 @@
     --admin-gradient-warning: linear-gradient(135deg, #f59e0b, #fbbf24);
     
     /* Shadows */
-    --admin-shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.1);
-    --admin-shadow-md: 0 10px 30px rgba(0, 0, 0, 0.15);
-    --admin-shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.2);
-    --admin-shadow-glow: 0 0 30px rgba(99, 102, 241, 0.3);
-    --admin-shadow-glow-strong: 0 0 50px rgba(99, 102, 241, 0.5);
+    --admin-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --admin-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --admin-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --admin-shadow-glow: 0 0 20px rgba(99, 102, 241, 0.3);
+    --admin-shadow-glow-strong: 0 0 30px rgba(99, 102, 241, 0.5);
     
     /* Animations */
     --admin-transition-fast: 0.2s ease;
@@ -112,21 +112,20 @@ body.login-page::before {
     transform: translateX(-50%);
     width: calc(100% - 40px);
     max-width: 1280px;
-    background: rgba(11, 16, 30, 0.8);
+    background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border-radius: 60px;
     padding: 0.8rem 2rem;
     z-index: 1000;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--admin-border);
     box-shadow: var(--admin-shadow-lg);
     transition: var(--admin-transition-normal);
 }
 
 .admin-navbar.scrolled {
     top: 10px;
-    background: rgba(5, 10, 24, 0.95);
-    border-color: rgba(99, 102, 241, 0.3);
+    background: rgba(255, 255, 255, 0.98);
+    border-color: var(--admin-primary);
     box-shadow: var(--admin-shadow-glow);
 }
 
@@ -174,50 +173,41 @@ body.login-page::before {
     text-decoration: none;
     font-weight: 500;
     font-size: 1rem;
-    padding: 0.7rem 1.5rem;
-    border-radius: 40px;
+    padding: 0.5rem 0;
     transition: var(--admin-transition-normal);
     position: relative;
-    border: 1px solid transparent;
     display: flex;
     align-items: center;
     gap: 0.5rem;
 }
 
-.admin-navbar .nav-link.home-link {
-    background: var(--admin-gradient-primary);
-    color: white;
-    box-shadow: var(--admin-shadow-glow);
-}
-
-.admin-navbar .nav-link.home-link:hover {
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: var(--admin-shadow-glow-strong);
-}
-
-.admin-navbar .nav-link:not(.home-link)::before {
+.admin-navbar .nav-link::after {
     content: '';
     position: absolute;
-    top: 0;
+    bottom: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 0;
+    height: 2px;
     background: var(--admin-gradient-primary);
-    border-radius: 40px;
-    opacity: 0;
-    transform: scale(0.8);
     transition: var(--admin-transition-normal);
-    z-index: -1;
 }
 
-.admin-navbar .nav-link:not(.home-link):hover {
-    color: white;
-    border-color: rgba(99, 102, 241, 0.3);
+.admin-navbar .nav-link.home-link {
+    color: var(--admin-primary);
+    font-weight: 600;
 }
 
-.admin-navbar .nav-link:not(.home-link):hover::before {
-    opacity: 0.15;
-    transform: scale(1);
+.admin-navbar .nav-link.home-link::after {
+    background: var(--admin-gradient-primary);
+}
+
+.admin-navbar .nav-link:hover {
+    color: var(--admin-primary);
+}
+
+.admin-navbar .nav-link:hover::after,
+.admin-navbar .nav-link.active::after {
+    width: 100%;
 }
 
 /* ===== LOGIN PAGE ===== */
@@ -289,13 +279,12 @@ body.login-page::before {
 }
 
 .login-box {
-    background: rgba(11, 16, 30, 0.7);
+    background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     padding: 3rem 2.5rem;
-    border-radius: 40px;
+    border: 1px solid var(--admin-border);
     box-shadow: var(--admin-shadow-lg);
-    border: 1px solid rgba(255, 255, 255, 0.1);
     position: relative;
     overflow: hidden;
     transition: var(--admin-transition-normal);
@@ -321,30 +310,10 @@ body.login-page::before {
     }
 }
 
-.login-box::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
-    animation: rotate 20s linear infinite;
-}
-
-@keyframes rotate {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
 .login-box:hover {
     transform: translateY(-5px);
     box-shadow: var(--admin-shadow-glow-strong);
-    border-color: rgba(99, 102, 241, 0.3);
+    border-color: var(--admin-primary);
 }
 
 .login-header {
@@ -373,7 +342,6 @@ body.login-page::before {
     height: 80px;
     margin: 0 auto 1.5rem;
     background: var(--admin-gradient-primary);
-    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -428,9 +396,8 @@ body.login-page::before {
 .form-group input {
     width: 100%;
     padding: 1rem 1rem 1rem 3rem;
-    background: rgba(255, 255, 255, 0.03);
-    border: 2px solid rgba(255, 255, 255, 0.05);
-    border-radius: 20px;
+    background: white;
+    border: 2px solid var(--admin-border);
     font-size: 1rem;
     color: var(--admin-text-primary);
     transition: var(--admin-transition-normal);
@@ -440,7 +407,7 @@ body.login-page::before {
 .form-group input:focus {
     outline: none;
     border-color: var(--admin-primary);
-    background: rgba(99, 102, 241, 0.05);
+    background: white;
     box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
 }
 
@@ -450,7 +417,7 @@ body.login-page::before {
 }
 
 .form-group input::placeholder {
-    color: transparent;
+    color: var(--admin-text-light);
 }
 
 .password-toggle {
@@ -525,7 +492,6 @@ body.login-page::before {
     padding: 1.2rem;
     background: var(--admin-gradient-primary);
     border: none;
-    border-radius: 20px;
     color: white;
     font-size: 1.1rem;
     font-weight: 600;
@@ -586,36 +552,33 @@ body.login-page::before {
 
 .message {
     padding: 1rem;
-    border-radius: 15px;
     margin-top: 1.5rem;
     font-weight: 500;
     text-align: center;
     animation: slideIn 0.3s ease;
     position: relative;
     z-index: 1;
+    border: 1px solid;
 }
 
 .message.success {
-    background: rgba(16, 185, 129, 0.1);
-    color: var(--admin-success);
-    border: 1px solid var(--admin-success);
-    backdrop-filter: blur(10px);
+    background: #d4edda;
+    color: #155724;
+    border-color: #c3e6cb;
 }
 
 .message.error {
-    background: rgba(239, 68, 68, 0.1);
-    color: var(--admin-danger);
-    border: 1px solid var(--admin-danger);
-    backdrop-filter: blur(10px);
+    background: #f8d7da;
+    color: #721c24;
+    border-color: #f5c6cb;
 }
 
 /* Admin Info Card */
 .admin-info {
     margin-top: 2rem;
     padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.02);
-    border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: #f8fafc;
+    border: 1px solid var(--admin-border);
     position: relative;
     z-index: 1;
 }
@@ -639,11 +602,11 @@ body.login-page::before {
 }
 
 .admin-info code {
-    background: rgba(0, 0, 0, 0.3);
+    background: white;
     padding: 0.2rem 0.5rem;
-    border-radius: 6px;
-    color: var(--admin-primary-light);
+    color: var(--admin-primary);
     font-family: monospace;
+    border: 1px solid var(--admin-border);
 }
 
 /* ===== ADMIN CONTAINER ===== */
@@ -651,14 +614,14 @@ body.login-page::before {
     display: flex;
     min-height: 100vh;
     position: relative;
-    background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+    background: #f8fafc;
 }
 
 /* ===== SIDEBAR ===== */
 .sidebar {
     width: 280px;
-    background: linear-gradient(180deg, var(--admin-bg-darker) 0%, var(--admin-bg-dark) 100%);
-    color: var(--admin-text-white);
+    background: white;
+    color: var(--admin-text);
     padding: 2rem 0;
     position: fixed;
     height: 100vh;
@@ -666,7 +629,7 @@ body.login-page::before {
     z-index: 1000;
     box-shadow: var(--admin-shadow-lg);
     transition: var(--admin-transition-normal);
-    border-right: 1px solid rgba(255, 255, 255, 0.05);
+    border-right: 1px solid var(--admin-border);
 }
 
 .sidebar::-webkit-scrollbar {
@@ -674,12 +637,11 @@ body.login-page::before {
 }
 
 .sidebar::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.05);
+    background: #f1f1f1;
 }
 
 .sidebar::-webkit-scrollbar-thumb {
-    background: var(--admin-gradient-primary);
-    border-radius: 5px;
+    background: var(--admin-primary);
 }
 
 .sidebar h2 {
@@ -703,12 +665,22 @@ body.login-page::before {
     align-items: center;
     gap: 1rem;
     padding: 1rem 1.5rem;
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--admin-text-secondary);
     text-decoration: none;
     transition: var(--admin-transition-normal);
     position: relative;
     font-weight: 500;
-    border-left: 3px solid transparent;
+}
+
+.sidebar nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 1.5rem;
+    width: 0;
+    height: 2px;
+    background: var(--admin-gradient-primary);
+    transition: var(--admin-transition-normal);
 }
 
 .sidebar nav a i {
@@ -717,15 +689,18 @@ body.login-page::before {
 }
 
 .sidebar nav a:hover {
-    color: white;
-    background: linear-gradient(90deg, rgba(99, 102, 241, 0.2), transparent);
-    border-left-color: var(--admin-primary);
+    color: var(--admin-primary);
+    background: #f8fafc;
+}
+
+.sidebar nav a:hover::after,
+.sidebar nav a.active::after {
+    width: calc(100% - 3rem);
 }
 
 .sidebar nav a.active {
-    color: white;
-    background: linear-gradient(90deg, rgba(99, 102, 241, 0.3), transparent);
-    border-left-color: var(--admin-primary);
+    color: var(--admin-primary);
+    background: #f8fafc;
     font-weight: 600;
 }
 
@@ -736,7 +711,7 @@ body.login-page::before {
     padding: 2rem;
     width: calc(100% - 280px);
     min-height: 100vh;
-    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    background: #f8fafc;
     transition: var(--admin-transition-normal);
 }
 
@@ -748,11 +723,8 @@ body.login-page::before {
     margin-bottom: 2.5rem;
     padding: 1.5rem 2rem;
     background: white;
-    border-radius: 20px;
     box-shadow: var(--admin-shadow-md);
     border: 1px solid var(--admin-border);
-    backdrop-filter: blur(10px);
-    background: rgba(255, 255, 255, 0.9);
 }
 
 .admin-header h1 {
@@ -776,7 +748,6 @@ body.login-page::before {
 .btn {
     padding: 0.8rem 2rem;
     border: none;
-    border-radius: 12px;
     cursor: pointer;
     font-size: 1rem;
     font-weight: 600;
@@ -789,7 +760,7 @@ body.login-page::before {
     position: relative;
     overflow: hidden;
     z-index: 1;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid transparent;
 }
 
 .btn::before {
@@ -814,12 +785,12 @@ body.login-page::before {
 .btn-primary {
     background: var(--admin-gradient-primary);
     color: white;
-    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+    box-shadow: 0 4px 10px rgba(99, 102, 241, 0.2);
 }
 
 .btn-primary:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.5);
+    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
 }
 
 .btn-secondary {
@@ -830,40 +801,27 @@ body.login-page::before {
 .btn-secondary:hover {
     background: #5a6268;
     transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(108, 117, 125, 0.3);
 }
 
 .btn-danger {
     background: var(--admin-gradient-danger);
     color: white;
-    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+    box-shadow: 0 4px 10px rgba(239, 68, 68, 0.2);
 }
 
 .btn-danger:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(239, 68, 68, 0.5);
+    box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
 }
 
 .btn-success {
     background: var(--admin-gradient-success);
     color: white;
-    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
-}
-
-.btn-success:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5);
 }
 
 .btn-warning {
     background: var(--admin-gradient-warning);
     color: white;
-    box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
-}
-
-.btn-warning:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(245, 158, 11, 0.5);
 }
 
 .btn-small {
@@ -880,7 +838,6 @@ body.login-page::before {
 .form-card {
     background: white;
     padding: 2.5rem;
-    border-radius: 25px;
     box-shadow: var(--admin-shadow-lg);
     margin-bottom: 2rem;
     border: 1px solid var(--admin-border);
@@ -891,7 +848,7 @@ body.login-page::before {
 
 .form-card:hover {
     transform: translateY(-5px);
-    box-shadow: var(--admin-shadow-hover);
+    box-shadow: var(--admin-shadow-glow);
     border-color: var(--admin-primary);
 }
 
@@ -939,11 +896,10 @@ body.login-page::before {
     width: 100%;
     padding: 1rem 1.2rem;
     border: 2px solid var(--admin-border);
-    border-radius: 15px;
     font-size: 1rem;
     font-family: inherit;
     transition: var(--admin-transition-normal);
-    background: #f9fafb;
+    background: white;
 }
 
 .form-group input:focus,
@@ -953,7 +909,6 @@ body.login-page::before {
     border-color: var(--admin-primary);
     background: white;
     box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
-    transform: scale(1.02);
 }
 
 .form-group textarea {
@@ -963,7 +918,7 @@ body.login-page::before {
 
 .form-group input[type="file"] {
     padding: 0.8rem;
-    background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+    background: white;
 }
 
 .form-actions {
@@ -983,7 +938,6 @@ body.login-page::before {
 .stat-card {
     background: white;
     padding: 2rem;
-    border-radius: 20px;
     box-shadow: var(--admin-shadow-md);
     text-align: center;
     transition: var(--admin-transition-bounce);
@@ -1000,13 +954,13 @@ body.login-page::before {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.05) 0%, transparent 70%);
     transition: var(--admin-transition-normal);
 }
 
 .stat-card:hover {
     transform: translateY(-10px) scale(1.02);
-    box-shadow: var(--admin-shadow-hover);
+    box-shadow: var(--admin-shadow-glow);
     border-color: var(--admin-primary);
 }
 
@@ -1053,7 +1007,6 @@ body.login-page::before {
 .quick-link-card {
     background: white;
     padding: 2rem;
-    border-radius: 20px;
     box-shadow: var(--admin-shadow-md);
     text-decoration: none;
     transition: var(--admin-transition-bounce);
@@ -1078,12 +1031,12 @@ body.login-page::before {
 
 .quick-link-card:hover {
     transform: translateY(-10px) scale(1.02);
-    box-shadow: var(--admin-shadow-hover);
+    box-shadow: var(--admin-shadow-glow);
     border-color: var(--admin-primary);
 }
 
 .quick-link-card:hover::before {
-    opacity: 0.05;
+    opacity: 0.02;
 }
 
 .quick-link-card h3 {
@@ -1116,14 +1069,13 @@ body.login-page::before {
 .data-table {
     background: white;
     padding: 2rem;
-    border-radius: 25px;
     box-shadow: var(--admin-shadow-lg);
     border: 1px solid var(--admin-border);
     transition: var(--admin-transition-normal);
 }
 
 .data-table:hover {
-    box-shadow: var(--admin-shadow-hover);
+    box-shadow: var(--admin-shadow-glow);
 }
 
 .data-table h2 {
@@ -1166,22 +1118,21 @@ body.login-page::before {
 }
 
 .data-table tbody tr:hover {
-    background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
-    transform: scale(1.01);
-    box-shadow: var(--admin-shadow-sm);
+    background: #f8fafc;
 }
 
 /* ===== DATA CARDS ===== */
 .data-card {
-    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    background: white;
     padding: 1.8rem;
-    border-radius: 18px;
     margin-bottom: 1.5rem;
     border-left: 5px solid var(--admin-primary);
     transition: var(--admin-transition-bounce);
     position: relative;
     overflow: hidden;
     box-shadow: var(--admin-shadow-sm);
+    border: 1px solid var(--admin-border);
+    border-left-width: 5px;
 }
 
 .data-card::before {
@@ -1191,13 +1142,13 @@ body.login-page::before {
     right: -50%;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.05) 0%, transparent 70%);
     transition: var(--admin-transition-normal);
 }
 
 .data-card:hover {
-    transform: translateX(10px) scale(1.02);
-    box-shadow: var(--admin-shadow-hover);
+    transform: translateX(5px) scale(1.01);
+    box-shadow: var(--admin-shadow-glow);
     border-left-width: 8px;
 }
 
@@ -1255,13 +1206,11 @@ body.login-page::before {
 /* ===== MESSAGE CARD SPECIFIC ===== */
 .message-card {
     border-left-color: var(--admin-success);
-    background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
 }
 
 .message-card .message-content {
     background: white;
     padding: 1.5rem;
-    border-radius: 15px;
     margin-top: 1rem;
     border: 1px solid var(--admin-border);
     position: relative;
@@ -1282,16 +1231,16 @@ body.login-page::before {
 .message-badge {
     display: inline-block;
     padding: 0.2rem 0.8rem;
-    border-radius: 50px;
     font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
+    border: 1px solid;
 }
 
 .badge-new {
-    background: rgba(16, 185, 129, 0.1);
-    color: var(--admin-success);
-    border: 1px solid var(--admin-success);
+    background: #d4edda;
+    color: #155724;
+    border-color: #c3e6cb;
 }
 
 /* ===== DASHBOARD SECTIONS ===== */
@@ -1333,7 +1282,6 @@ body.login-page::before {
     background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
     background-size: 200% 100%;
     animation: loading 1.5s ease-in-out infinite;
-    border-radius: 8px;
 }
 
 @keyframes loading {
@@ -1465,7 +1413,7 @@ body.login-page::before {
     }
     
     .admin-navbar .nav-link {
-        padding: 0.5rem 1rem;
+        padding: 0.5rem 0;
         font-size: 0.9rem;
     }
 }
@@ -1514,7 +1462,7 @@ body.login-page::before {
     }
     
     .admin-navbar .nav-link {
-        padding: 0.5rem;
+        padding: 0.5rem 0;
     }
     
     .login-icon {
@@ -1598,18 +1546,16 @@ body.login-page::before {
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--admin-light);
-    border-radius: 10px;
+    background: #f1f1f1;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-    border-radius: 10px;
-    border: 2px solid var(--admin-light);
+    background: var(--admin-primary);
+    border: 2px solid #f1f1f1;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    background: var(--admin-primary-dark);
 }
 
 /* ===== UTILITY CLASSES ===== */
@@ -1650,61 +1596,7 @@ body.login-page::before {
 .position-relative { position: relative; }
 .position-absolute { position: absolute; }
 
-.rounded-sm { border-radius: 8px; }
-.rounded-md { border-radius: 12px; }
-.rounded-lg { border-radius: 20px; }
-.rounded-full { border-radius: 9999px; }
-
 .shadow-sm { box-shadow: var(--admin-shadow-sm); }
 .shadow-md { box-shadow: var(--admin-shadow-md); }
 .shadow-lg { box-shadow: var(--admin-shadow-lg); }
 .shadow-glow { box-shadow: var(--admin-shadow-glow); }
-
-/* Dark mode toggle support */
-@media (prefers-color-scheme: dark) {
-    .admin-container {
-        background: var(--admin-bg-dark);
-    }
-    
-    .main-content {
-        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-    }
-    
-    .admin-header,
-    .form-card,
-    .data-table,
-    .stat-card,
-    .quick-link-card,
-    .data-card {
-        background: var(--admin-bg-card);
-        backdrop-filter: blur(10px);
-        border-color: rgba(255, 255, 255, 0.05);
-    }
-    
-    .admin-header h1,
-    .form-card h2,
-    .data-table h2,
-    .stat-number,
-    .quick-link-card h3 {
-        color: var(--admin-text-primary);
-    }
-    
-    .stat-card h3,
-    .quick-link-card p,
-    .data-card p,
-    .data-card li {
-        color: var(--admin-text-secondary);
-    }
-    
-    .form-group input,
-    .form-group textarea,
-    .form-group select {
-        background: rgba(255, 255, 255, 0.05);
-        border-color: rgba(255, 255, 255, 0.1);
-        color: var(--admin-text-primary);
-    }
-    
-    .form-group label {
-        color: var(--admin-text-secondary);
-    }
-}
