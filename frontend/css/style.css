@@ -50,7 +50,7 @@
 
 html {
     scroll-behavior: smooth;
-    scroll-padding-top: 80px;
+    scroll-padding-top: 100px; /* Increased to account for navbar height + gap */
 }
 
 body {
@@ -165,7 +165,7 @@ body::before {
 .nav-menu {
     display: flex;
     list-style: none;
-    gap: 2rem; /* Increased gap between menu items */
+    gap: 2rem;
 }
 
 .nav-menu a {
@@ -219,7 +219,6 @@ body::before {
     height: 50px;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
     background: var(--bg-card);
     border: 1px solid rgba(255, 255, 255, 0.1);
     transition: var(--transition-normal);
@@ -235,7 +234,7 @@ body::before {
     min-height: 100vh;
     display: flex;
     align-items: center;
-    padding: 120px 0 80px;
+    padding: 140px 0 80px; /* Increased top padding to create gap from navbar */
     position: relative;
     overflow: hidden;
 }
@@ -268,7 +267,6 @@ body::before {
 .profile-img {
     width: 220px;
     height: 220px;
-    border-radius: 50%;
     object-fit: cover;
     border: 4px solid rgba(255, 255, 255, 0.2);
     box-shadow: var(--shadow-lg);
@@ -284,7 +282,6 @@ body::before {
     left: -10px;
     right: -10px;
     bottom: -10px;
-    border-radius: 50%;
     background: var(--gradient-primary);
     opacity: 0.3;
     z-index: -1;
@@ -378,7 +375,6 @@ body::before {
     left: 50%;
     width: 0;
     height: 0;
-    border-radius: 50%;
     background: rgba(255, 255, 255, 0.3);
     transform: translate(-50%, -50%);
     transition: width 0.8s, height 0.8s;
@@ -415,50 +411,49 @@ body::before {
     box-shadow: 0 20px 40px rgba(99, 102, 241, 0.4);
 }
 
+/* ===== SOCIAL LINKS - CLEAN UNDERLINE STYLE ===== */
 .social-links {
     display: flex;
-    gap: 1.2rem;
+    gap: 2rem;
     justify-content: center;
     flex-wrap: wrap;
+    margin-top: 2rem;
 }
 
 .social-links a {
-    color: var(--text-primary);
-    font-size: 1.3rem;
-    width: 55px;
-    height: 55px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--bg-card);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: var(--transition-bounce);
+    color: var(--text-secondary);
     text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    padding: 0.5rem 0;
+    transition: var(--transition-normal);
     position: relative;
+    background: transparent;
+    width: auto;
+    height: auto;
+    display: inline-block;
+    border: none;
+    box-shadow: none;
 }
 
-.social-links a::before {
+.social-links a::after {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
     bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
     background: var(--gradient-primary);
-    opacity: 0;
     transition: var(--transition-normal);
-    z-index: -1;
 }
 
 .social-links a:hover {
     color: white;
-    transform: translateY(-8px) rotate(360deg);
-    border-color: transparent;
+    transform: translateY(-2px);
 }
 
-.social-links a:hover::before {
-    opacity: 1;
+.social-links a:hover::after {
+    width: 100%;
 }
 
 /* ===== SECTIONS ===== */
@@ -910,10 +905,11 @@ body::before {
     line-height: 1.7;
 }
 
-/* ===== CONTACT SECTION ===== */
+/* ===== CONTACT SECTION - CLEANER STYLING ===== */
 .contact-section {
     position: relative;
     overflow: hidden;
+    padding: 100px 0;
 }
 
 .contact-wrapper {
@@ -936,15 +932,14 @@ body::before {
     font-size: 2rem;
     font-weight: 700;
     margin-bottom: 1.5rem;
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--text-primary);
 }
 
 .contact-info p {
     color: var(--text-light);
     margin-bottom: 2rem;
-    line-height: 1.7;
+    line-height: 1.8;
+    font-size: 1rem;
 }
 
 .contact-details {
@@ -955,22 +950,21 @@ body::before {
     display: flex;
     align-items: center;
     gap: 1rem;
-    margin-bottom: 1.2rem;
-    padding: 0.8rem 1.2rem;
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.03);
+    margin-bottom: 1rem;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     transition: var(--transition-normal);
 }
 
 .contact-detail-item:hover {
-    transform: translateX(10px);
-    background: rgba(99, 102, 241, 0.1);
-    border-color: var(--primary);
+    border-bottom-color: var(--primary);
+    transform: translateX(5px);
 }
 
 .contact-detail-item i {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     color: var(--primary);
+    width: 24px;
 }
 
 .contact-detail-item span {
@@ -988,7 +982,7 @@ body::before {
 .contact-form {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1.8rem;
 }
 
 .form-group {
@@ -998,9 +992,10 @@ body::before {
 .form-group input,
 .form-group textarea {
     width: 100%;
-    padding: 1rem 1.5rem;
-    background: rgba(255, 255, 255, 0.02);
-    border: 2px solid rgba(255, 255, 255, 0.05);
+    padding: 1rem 0;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
     font-size: 1rem;
     font-family: inherit;
     color: var(--text-primary);
@@ -1008,43 +1003,32 @@ body::before {
 }
 
 .form-group textarea {
-    min-height: 150px;
+    min-height: 100px;
     resize: vertical;
 }
 
 .form-group label {
     position: absolute;
-    left: 1.5rem;
-    top: 50%;
-    transform: translateY(-50%);
+    left: 0;
+    top: 1rem;
     color: var(--text-muted);
     transition: var(--transition-normal);
     pointer-events: none;
-    background: transparent;
-    padding: 0 0.5rem;
-}
-
-.form-group textarea ~ label {
-    top: 1.5rem;
-    transform: none;
+    font-size: 1rem;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: var(--primary);
-    background: rgba(99, 102, 241, 0.05);
-    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+    border-bottom-color: var(--primary);
 }
 
 .form-group input:focus ~ label,
 .form-group textarea:focus ~ label,
 .form-group input:not(:placeholder-shown) ~ label,
 .form-group textarea:not(:placeholder-shown) ~ label {
-    top: 0;
-    left: 1rem;
+    top: -1.2rem;
     font-size: 0.85rem;
-    background: var(--bg-card);
     color: var(--primary);
 }
 
@@ -1055,40 +1039,24 @@ body::before {
 
 .contact-form button {
     width: 100%;
-    padding: 1.2rem;
-    font-size: 1.1rem;
-    margin-top: 1rem;
-    background: var(--gradient-primary);
-    border: none;
+    padding: 1rem;
+    background: transparent;
+    border: 2px solid var(--primary);
     color: white;
     font-weight: 600;
+    font-size: 1rem;
     cursor: pointer;
-    transition: var(--transition-bounce);
-    position: relative;
-    overflow: hidden;
-}
-
-.contact-form button::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.3);
-    transform: translate(-50%, -50%);
-    transition: width 0.8s, height 0.8s;
+    transition: var(--transition-normal);
+    margin-top: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .contact-form button:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: var(--shadow-glow);
-}
-
-.contact-form button:hover::before {
-    width: 300px;
-    height: 300px;
+    background: var(--primary);
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(99, 102, 241, 0.2);
 }
 
 .contact-message {
@@ -1097,29 +1065,19 @@ body::before {
     text-align: center;
     font-weight: 500;
     animation: slideIn 0.3s ease;
-}
-
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    border: 1px solid;
 }
 
 .contact-message.success {
     background: rgba(16, 185, 129, 0.1);
     color: var(--success);
-    border: 1px solid var(--success);
+    border-color: var(--success);
 }
 
 .contact-message.error {
     background: rgba(239, 68, 68, 0.1);
     color: var(--danger);
-    border: 1px solid var(--danger);
+    border-color: var(--danger);
 }
 
 /* ===== FOOTER SECTION ===== */
@@ -1627,7 +1585,7 @@ body::before {
     }
     
     .hero {
-        padding: 100px 0 60px;
+        padding: 120px 0 60px;
     }
     
     .hero h1 {
@@ -1752,21 +1710,19 @@ body::before {
     }
     
     .social-links {
-        gap: 0.8rem;
+        gap: 1.5rem;
     }
     
     .social-links a {
-        width: 45px;
-        height: 45px;
-        font-size: 1.1rem;
+        font-size: 1rem;
     }
     
     .contact-detail-item {
-        padding: 0.6rem 1rem;
+        padding: 0.6rem 0;
     }
     
     .contact-detail-item i {
-        font-size: 1.2rem;
+        font-size: 1rem;
     }
     
     .contact-detail-item span {
