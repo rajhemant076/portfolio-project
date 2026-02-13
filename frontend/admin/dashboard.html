@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+    <div class="admin-container">
+        <aside class="sidebar">
+            <h2>Admin Panel</h2>
+            <nav>
+                <a href="dashboard.html" class="active">Dashboard</a>
+                <a href="profile.html">Profile</a>
+                <a href="projects.html">Projects</a>
+                <a href="experience.html">Experience</a>
+                <a href="skills.html">Skills</a>
+                <a href="education.html">Education</a>
+                <a href="messages.html">Messages</a>
+                <a href="#" id="logout-btn">Logout</a>
+            </nav>
+        </aside>
+        
+        <main class="main-content">
+            <header class="admin-header">
+                <h1>Dashboard</h1>
+            </header>
+            
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <h3>Projects</h3>
+                    <p id="projects-count" class="stat-number">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Experience</h3>
+                    <p id="experience-count" class="stat-number">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Skills</h3>
+                    <p id="skills-count" class="stat-number">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Messages</h3>
+                    <p id="messages-count" class="stat-number">0</p>
+                </div>
+            </div>
+            
+            <div class="dashboard-section">
+                <h2>Quick Links</h2>
+                <div class="quick-links">
+                    <a href="profile.html" class="quick-link-card">
+                        <h3>Update Profile</h3>
+                        <p>Edit your personal information</p>
+                    </a>
+                    <a href="projects.html" class="quick-link-card">
+                        <h3>Manage Projects</h3>
+                        <p>Add, edit or delete projects</p>
+                    </a>
+                    <a href="messages.html" class="quick-link-card">
+                        <h3>View Messages</h3>
+                        <p>Check contact messages</p>
+                    </a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/admin-auth.js"></script>
+    <script>
+        const API_URL = 'http://localhost:5000/api';
+
+        async function fetchStats() {
+            const token = localStorage.getItem('adminToken');
+            
+            try {
+                // Fetch projects count
+                const projectsRes = await fetch(`${API_URL}/projects`);
+                const projectsData = await projectsRes.json();
+                document.getElementById('projects-count').textContent = projectsData.data?.length || 0;
+                
+                // Fetch experience count
+                const expRes = await fetch(`${API_URL}/experience`);
+                const expData = await expRes.json();
+                document.getElementById('experience-count').textContent = expData.data?.length || 0;
+                
+                // Fetch skills count
+                const skillsRes = await fetch(`${API_URL}/skills`);
+                const skillsData = await skillsRes.json();
+                document.getElementById('skills-count').textContent = skillsData.data?.length || 0;
+                
+                // Fetch messages count
+                const messagesRes = await fetch(`${API_URL}/messages`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const messagesData = await messagesRes.json();
+                document.getElementById('messages-count').textContent = messagesData.data?.length || 0;
+            } catch (error) {
+                console.error('Error fetching stats:', error);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', fetchStats);
+    </script>
+</body>
+</html>
