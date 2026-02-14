@@ -2,11 +2,39 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Admin Login - Portfolio Dashboard</title>
     <link rel="stylesheet" href="../css/admin.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+        
+        /* Fix for scrolling issue */
+        html, body {
+            height: 100%;
+            overflow-y: auto !important;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        body.login-page {
+            min-height: 100%;
+            height: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 20px 40px;
+            position: relative;
+            overflow-y: auto !important;
+        }
+        
+        .login-container {
+            margin: auto;
+            padding: 20px 0;
+        }
+        
+        /* Ensure login button is visible */
+        .login-btn {
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body class="login-page">
@@ -76,13 +104,7 @@
             
             <div id="login-message" class="message"></div>
             
-            <!-- Admin Info Card -->
-            <div class="admin-info">
-                <h3>Demo Credentials</h3>
-                <p><span class="info-icon">📧</span> Email: <code>admin@portfolio.com</code></p>
-                <p><span class="info-icon">🔑</span> Password: <code>admin123</code></p>
-                <p class="demo-warning">⚠️ For demo purposes only. Change in production.</p>
-            </div>
+            <!-- Admin Info Card - REMOVED DEMO CREDENTIALS as requested -->
         </div>
     </div>
 
@@ -171,14 +193,7 @@
             }
         });
 
-        // Auto-fill demo credentials (optional)
-        document.addEventListener('DOMContentLoaded', () => {
-            // For demo purposes, you can auto-fill credentials
-            if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-                document.getElementById('email').value = 'admin@portfolio.com';
-                document.getElementById('password').value = 'admin123';
-            }
-        });
+        // REMOVED auto-fill demo credentials
 
         // Add keyboard shortcut to focus on email input (Ctrl+L)
         document.addEventListener('keydown', (e) => {
